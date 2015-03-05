@@ -21,9 +21,10 @@ This RFC aims to ease interactions between PHP and such extensions to make them 
 
 ===== Proposal =====
 
-We propose to split ''php_error_cb'' into multiple hookable parts, in particular, for the following behaviours:
+We propose to split ''php_error_cb'' into multiple hookable parts corresponding to the following behaviours:
   - Display the error (**display** part)
   - Log the error (**log** part)
+  - Do additional processing if needed (**process** part), empty by default
   - Check if the error is recoverable and bail out if needed (**bailout** part)
 
 We believe that there is no interesting use case for hooking the other parts of ''php_error_cb''.
@@ -42,13 +43,13 @@ An extension that want to **extend** one of the part can do it so with:
 
     php_add_error_hook(E_HOOK_LOG, my_logging_hook);
 
-''php_replace_error_hook'' and ''php_add_error_hook'' will operate on one of the internal linked lists of error hooks. There will be one linked list for each parts, referred to with one of the constant: ''E_HOOK_DISPLAY'', ''E_HOOK_LOG'' or ''E_HOOK_BAILOUT''. Those linked list will, by default, contain the original implementation to avoid any BC break.
+''php_replace_error_hook'' and ''php_add_error_hook'' will operate on one of the internal linked lists of error hooks. There will be one linked list for each parts, referred to with one of the constant: ''E_HOOK_DISPLAY'', ''E_HOOK_LOG'', ''E_HOOK_PROCESS'' or ''E_HOOK_BAILOUT''. Those linked list will, by default, contain the original implementation to avoid any BC break.
 
 ===== Backward incompatible changes =====
 None.
 
 ===== Proposed PHP Version(s) =====
-PHP 7.0
+Next PHP version, 5.7 or 7.0, which ever comes first.
 
 ===== RFC Impact =====
 
@@ -62,7 +63,7 @@ None at the moment.
 This RFC does not suggest a language change, so a 50%+1 majority is required for passage.
 
 ===== Patches and tests =====
-The patch is under creation.
+The patch is under creation by Patrick Allaert and Olivier Garcia
 
 ===== Implementation =====
 After the project is implemented, this section should contain:
