@@ -39,7 +39,7 @@ An extension that want to **extend** one of the part can do it so with:
 An extension that want to **clear** one of the part can do it so with:
     php_clear_error_hook(E_HOOK_DISPLAY);
 
-''php_add_error_hook'' and ''php_clear_error_hook'' will operate on one of the internal linked lists of error hooks. There will be one linked list for each parts, referred to with one of the constant: ''E_HOOK_DISPLAY'', ''E_HOOK_LOG'', ''E_HOOK_PROCESS'' or ''E_HOOK_BAILOUT''. Those linked list will, by default, contain the original implementation to avoid any BC break.
+''php_add_error_hook'' and ''php_clear_error_hook'' will operate on one of the internal linked lists of error hooks. There will be one linked list for each parts, referred to with one of the constant: ''E_HOOK_DISPLAY'', ''E_HOOK_LOG'', ''E_HOOK_PROCESS'' or ''E_HOOK_BAILOUT''. Those linked lists will, by default, contain the original implementation to avoid any BC break.
 
 ===== Backward incompatible changes =====
 None.
