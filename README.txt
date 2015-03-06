@@ -29,13 +29,6 @@ We propose to split ''php_error_cb'' into multiple hookable parts corresponding 
 
 We believe that there is no interesting use case for hooking the other parts of ''php_error_cb''.
 
-An extension that want to **replace** one of the part can do it so with:
-    PHP_ERROR_HOOK_API my_display_hook(PHP_ERROR_HOOK_ARGS) {
-        /* Do some display with error line number, filename, message, ... */
-    }
-
-    php_replace_error_hook(E_HOOK_DISPLAY, my_display_hook);
-
 An extension that want to **extend** one of the part can do it so with:
     PHP_ERROR_HOOK_API my_logging_hook(PHP_ERROR_HOOK_ARGS) {
         /* Do some logging with error line number, filename, message, ... */
@@ -43,7 +36,10 @@ An extension that want to **extend** one of the part can do it so with:
 
     php_add_error_hook(E_HOOK_LOG, my_logging_hook);
 
-''php_replace_error_hook'' and ''php_add_error_hook'' will operate on one of the internal linked lists of error hooks. There will be one linked list for each parts, referred to with one of the constant: ''E_HOOK_DISPLAY'', ''E_HOOK_LOG'', ''E_HOOK_PROCESS'' or ''E_HOOK_BAILOUT''. Those linked list will, by default, contain the original implementation to avoid any BC break.
+An extension that want to **clear** one of the part can do it so with:
+    php_clear_error_hook(E_HOOK_DISPLAY);
+
+''php_add_error_hook'' and ''php_clear_error_hook'' will operate on one of the internal linked lists of error hooks. There will be one linked list for each parts, referred to with one of the constant: ''E_HOOK_DISPLAY'', ''E_HOOK_LOG'', ''E_HOOK_PROCESS'' or ''E_HOOK_BAILOUT''. Those linked list will, by default, contain the original implementation to avoid any BC break.
 
 ===== Backward incompatible changes =====
 None.
